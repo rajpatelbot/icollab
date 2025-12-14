@@ -13,3 +13,15 @@ build:
 # 🚀 Run the Go server
 run:
 	@go run cmd/server/main.go
+
+# 🧱 Create a new empty migration file
+migrate-create:
+	@migrate create -ext sql -dir internal/migrations/$(subdir) -seq $(name)
+
+# Apply migrations for a specific module
+migrate-up:
+	@migrate -path internal/migrations/$(subdir) -database $(DB_URL) up
+
+# Rollback the last migration for a specific module
+migrate-down:
+	@migrate -path internal/migrations/$(subdir) -database $(DB_URL) down 1
